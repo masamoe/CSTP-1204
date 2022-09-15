@@ -5,8 +5,9 @@ public class Lab2 {
         arr[lastIndex]++;
         return Arrays.toString(arr);
     }
+
     int removeElement(int[] numbers, int val) {
-        int size = numbers.length -1;
+        int size = numbers.length - 1;
         int k = 0;
 
         for(int i = 0; i < size; i++)
