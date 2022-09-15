@@ -6,18 +6,16 @@ public class Lab2 {
         return Arrays.toString(arr);
     }
 
-    int removeElement(int[] numbers, int val) {
-        int size = numbers.length - 1;
+    int removeElement(int[] nums, int val) {
+        int length = (nums.length - 1);
         int k = 0;
 
-        for(int i = 0; i < size; i++)
-            if(numbers[i] == val) {
-                for (int j = i; j < size; j++)
-                    numbers[j] = numbers[j + 1];
-                size--;
+        for(int i = 0; i < length; i++)
+            if(nums[i] == val) {
+                for (int j = i; j < length; j++)
+                    nums[j] = nums[j + 1];
                 k++;
             }
-
         return k;
     }
 }
