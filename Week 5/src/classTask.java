@@ -1,5 +1,10 @@
-public class classTask1 {
+public class classTask {
+    public enum Month {JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER};
     public static int dayOfYear(int month, int dayOfMonth, int year) {
+        if (month < 1 || month > 12) {
+            throw new IllegalArgumentException();
+        }
+
         int[] monthLengths = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         int day = dayOfMonth;
 
