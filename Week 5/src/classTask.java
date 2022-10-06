@@ -22,7 +22,7 @@ public class classTask {
         int day = dayOfMonth;
 
         if(isLeapYear(year)){
-            monthLengths[month.ordinal()+1] = 29;
+            monthLengths[1] = 29;
         }
 
         if (month.ordinal()+1 >= 2) {
