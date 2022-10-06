@@ -1,4 +1,4 @@
-public class classTask {
+public class classTask1 {
     public static int dayOfYear(int month, int dayOfMonth, int year) {
         int[] monthLengths = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         int day = dayOfMonth;
