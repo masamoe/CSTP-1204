@@ -10,7 +10,10 @@ public class PostfixEvaluatorTest {
 
     @Test
     public void test() {
-        fail("Not yet implemented");
+        eval("9 9 +");
+        eval("+99");
+
+        //fail("Not yet implemented");
     }
 
 }

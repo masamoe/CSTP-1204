@@ -23,6 +23,7 @@ public class PostfixEvaluator {
      */
     public PostfixEvaluator( String expr ) {
         arithmeticExpr = expr;
+
     }
 
     /**
@@ -33,7 +34,7 @@ public class PostfixEvaluator {
      * @throws MalformedExpressionException if the provided expression is not
      * 	a valid expression in Postfix notation
      */
-    double eval( ) throws MalformedExpressionException {
+    double eval(String expr) throws MalformedExpressionException {
         // TODO: Implement this method.
         // The code provided here is for illustration only, and
         // can be deleted when you write your implementation.
@@ -44,9 +45,10 @@ public class PostfixEvaluator {
 
         // Use the Scanner to get the elements (tokens) in the
         // arithmetic expression.
-
+        new PostfixEvaluator(expr);
         Scanner scanner = new Scanner(arithmeticExpr);
         Token currToken = scanner.getToken();
+
 
         // now process the token, etc.
         // You should read the implementation of the Token class
