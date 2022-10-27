@@ -55,22 +55,47 @@ public class HtmlValidator {
 
     public void validate() {
         stack = new Stack<HtmlTag>();
+        int indentations = 0;
         for (HtmlTag tag : queue) {
-            if (tag.isOpenTag()) {
-                stack.push(tag);
-            } else {
-                if (stack.isEmpty()) {
-                    System.out.println("Extra closing tag: " + tag);
+            if (!tag.isSelfClosing()) {
+                if (tag.isOpenTag()) {
+                    stack.push(tag);
+                    indentations++;
+                    for (int i = 0; i < indentations; i++) {
+                        System.out.print("    ");
+                    }
+                    System.out.println(tag);
                 } else {
-                    HtmlTag top = stack.pop();
-                    if (!top.getElement().equals(tag.getElement())) {
-                        System.out.println("Mismatched tags: " + top + " and " + tag);
+                    if (stack.isEmpty()) {
+                        System.out.println("Error: " + tag);
+                    } else {
+                        if (stack.peek().getElement().equals(tag.getElement())) {
+                            for (int i = 0; i < indentations; i++) {
+                                System.out.print("    ");
+                            }
+                            System.out.println(tag);
+                            stack.pop();
+                            indentations--;
+                        } else {
+                            System.out.println("Error: " + tag);
+                        }
                     }
                 }
+            } else {
+                for (int i = 0; i < indentations; i++) {
+                    System.out.print("    ");
+                }
+                System.out.println(tag);
             }
         }
-        while (!stack.isEmpty()) {
-            System.out.println("Missing closing tag: " + stack.pop());
+        if (!stack.isEmpty()) {
+            Stack<String> errorStack = new Stack<>();
+            for (HtmlTag tag : stack) {
+                errorStack.add(tag.getElement());
+            }
+            while (!errorStack.isEmpty()) {
+                System.out.println("Error Unclosed Tag: " + errorStack.pop());
+            }
         }
     }
 }
