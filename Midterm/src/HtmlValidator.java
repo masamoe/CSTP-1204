@@ -13,18 +13,36 @@ public class HtmlValidator {
     }
 
     public HtmlValidator(Queue<HtmlTag> tags) {
+        if (tags == null) {
+            throw new IllegalArgumentException();
+        }
         queue = new LinkedList<HtmlTag>();
+        Queue<HtmlTag> TempQueue = new LinkedList<HtmlTag>();
         for (HtmlTag tag : tags) {
+            TempQueue.add(tag);
+        }
+        for (HtmlTag tag : TempQueue) {
             queue.add(tag);
         }
     }
 
     public void addTag(HtmlTag tag) {
+        if (tag == null) {
+            throw new IllegalArgumentException();
+        }
         queue.add(tag);
     }
 
     public Queue<HtmlTag> getTags() {
-        return queue;
+        Queue<HtmlTag> result = new LinkedList<HtmlTag>();
+        Queue<HtmlTag> TempQueue = new LinkedList<HtmlTag>();
+        for (HtmlTag tag : queue) {
+            TempQueue.add(tag);
+        }
+        for (HtmlTag tag : TempQueue) {
+            result.add(tag);
+        }
+        return result;
     }
 
     public void removeAll(String element) {
