@@ -1,3 +1,5 @@
+package A1;
+
 import java.util.Stack;
 
 /**
@@ -35,29 +37,45 @@ public class PostfixEvaluator {
      * @throws MalformedExpressionException if the provided expression is not
      *                                      a valid expression in Postfix notation
      */
-    double eval(String expr) throws MalformedExpressionException {
-
-        // TODO: Implement this method.
-        // The code provided here is for illustration only, and
-        // can be deleted when you write your implementation.
-
-        // Using a stack makes it very simple to evaluate the
-        // arithmetic expression.
-        // See http://docs.oracle.com/javase/8/docs/api/java/util/Stack.html
-
-        // Use the Scanner to get the elements (tokens) in the
-        // arithmetic expression.
-        new PostfixEvaluator(expr);
+    double eval() throws MalformedExpressionException {
         Scanner scanner = new Scanner(arithmeticExpr);
-        Stack<Token> tokenStack = new Stack<Token>();
+        Stack<Double> tokenStack = new Stack<Double>();
 
         while (!scanner.isEmpty()) {
             Token currToken = scanner.getToken();
             System.out.println(currToken.toString());
 
+            if (currToken.isDouble()) {
+                tokenStack.push(currToken.getValue());
+            } else {
+                if (tokenStack.size() < 2) {
+                    throw new MalformedExpressionException("Not enough operands");
+                }
+                double operand2 = tokenStack.pop();
+                double operand1 = tokenStack.pop();
+                double result = 0;
+                switch (currToken.getName()) {
+                    case "+":
+                        result = operand1 + operand2;
+                        break;
+                    case "-":
+                        result = operand1 - operand2;
+                        break;
+                    case "*":
+                        result = operand1 * operand2;
+                        break;
+                    case "/":
+                        result = operand1 / operand2;
+                        break;
+                    default:
+                        throw new MalformedExpressionException("Invalid operator");
+                }
+                tokenStack.push(result);
+            }
             scanner.eatToken();
         }
 
+        System.out.println(tokenStack.peek());
         // now process the token, etc.
         // You should read the implementation of the Token class
         // to determine what methods you can and should use.
@@ -65,15 +83,6 @@ public class PostfixEvaluator {
         // It is sufficient to support the four basic operations:
         // addition, subtraction, multiplication & division.
 
-        return 0.0;
-    }
-
-    public static void main(String[] args) {
-        PostfixEvaluator eval = new PostfixEvaluator("9 9 +");
-        try {
-            System.out.println(eval.eval("9 9 +")); // 18
-        } catch (MalformedExpressionException e) {
-            e.printStackTrace();
-        }
+        return tokenStack.peek();
     }
 }

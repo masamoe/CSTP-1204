@@ -1,32 +1,34 @@
+
 public class classTask {
-    public enum Month {JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER};
-    public static boolean isLeapYear(int year){
+    public enum Month {
+        JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
+    };
+
+    public static boolean isLeapYear(int year) {
         boolean isLeap = false;
-        if(year % 4 != 0){
+        if (year % 4 != 0) {
             isLeap = false;
-        }
-        else if(year % 100 != 0){
+        } else if (year % 100 != 0) {
             isLeap = true;
-        }
-        else if(year % 400 != 0){
+        } else if (year % 400 != 0) {
             isLeap = false;
-        }
-        else{
+        } else {
             isLeap = true;
         }
         return isLeap;
     }
+
     public static int dayOfYear(Month month, int dayOfMonth, int year) {
 
-        int[] monthLengths = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        int[] monthLengths = new int[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         int day = dayOfMonth;
 
-        if(isLeapYear(year)){
+        if (isLeapYear(year)) {
             monthLengths[1] = 29;
         }
 
-        if (month.ordinal()+1 >= 2) {
-            for (int m = 1; m < month.ordinal()+1; ++m) {
+        if (month.ordinal() + 1 >= 2) {
+            for (int m = 1; m < month.ordinal() + 1; ++m) {
                 day += monthLengths[m];
             }
         }
@@ -41,5 +43,3 @@ public class classTask {
         dayOfYear(Month.MARCH, myDay, 2022);
     }
 }
-
-

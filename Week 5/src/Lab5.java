@@ -1,5 +1,5 @@
-import java.util.Stack;
 
+import java.util.Stack;
 
 public class Lab5 {
     static boolean contains(char c, char[] array) {
@@ -15,37 +15,34 @@ public class Lab5 {
         String input = "()[]{}";
         Stack<Character> myStack = new Stack<>();
         boolean result;
-        for (char x: input.toCharArray()) {
-            char[] starters = new char[]{'(', '[', '{'};
-            char[] enders = new char[]{')', ']', '}'};
-            if (contains(x, starters)){
+        for (char x : input.toCharArray()) {
+            char[] starters = new char[] { '(', '[', '{' };
+            char[] enders = new char[] { ')', ']', '}' };
+            if (contains(x, starters)) {
                 myStack.push(x);
             }
-            if (contains(x, enders)){
+            if (contains(x, enders)) {
                 char comparator = myStack.pop();
-                if (x == ')'){
-                    if (comparator == '('){
+                if (x == ')') {
+                    if (comparator == '(') {
                         result = true;
-                    }
-                    else {
+                    } else {
                         result = false;
                         return;
                     }
                 }
-                if (x == ']'){
-                    if (comparator == '['){
+                if (x == ']') {
+                    if (comparator == '[') {
                         result = true;
-                    }
-                    else {
+                    } else {
                         result = false;
                         return;
                     }
                 }
-                if (x == '}'){
-                    if (comparator == '{'){
+                if (x == '}') {
+                    if (comparator == '{') {
                         result = true;
-                    }
-                    else {
+                    } else {
                         result = false;
                         return;
                     }
