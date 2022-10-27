@@ -5,7 +5,8 @@ import java.util.Stack;
  *
  * This class contains a method to evaluate an arithmetic expression
  * that is in Postfix notation (or Reverse Polish Notation).
- * See <a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation">Wikipedia</a>
+ * See
+ * <a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation">Wikipedia</a>
  * for details on the notation.
  *
  */
@@ -19,9 +20,9 @@ public class PostfixEvaluator {
      * as input argument.
      *
      * @param expr is a string that represents an arithmetic expression
-     * <strong>in Postfix notation</strong>.
+     *             <strong>in Postfix notation</strong>.
      */
-    public PostfixEvaluator( String expr ) {
+    public PostfixEvaluator(String expr) {
         arithmeticExpr = expr;
 
     }
@@ -32,9 +33,10 @@ public class PostfixEvaluator {
      *
      * @return the value of the arithmetic expression
      * @throws MalformedExpressionException if the provided expression is not
-     * 	a valid expression in Postfix notation
+     *                                      a valid expression in Postfix notation
      */
     double eval(String expr) throws MalformedExpressionException {
+
         // TODO: Implement this method.
         // The code provided here is for illustration only, and
         // can be deleted when you write your implementation.
@@ -47,8 +49,14 @@ public class PostfixEvaluator {
         // arithmetic expression.
         new PostfixEvaluator(expr);
         Scanner scanner = new Scanner(arithmeticExpr);
-        Token currToken = scanner.getToken();
+        Stack<Token> tokenStack = new Stack<Token>();
 
+        while (!scanner.isEmpty()) {
+            Token currToken = scanner.getToken();
+            System.out.println(currToken.toString());
+
+            scanner.eatToken();
+        }
 
         // now process the token, etc.
         // You should read the implementation of the Token class
@@ -60,4 +68,12 @@ public class PostfixEvaluator {
         return 0.0;
     }
 
+    public static void main(String[] args) {
+        PostfixEvaluator eval = new PostfixEvaluator("9 9 +");
+        try {
+            System.out.println(eval.eval("9 9 +")); // 18
+        } catch (MalformedExpressionException e) {
+            e.printStackTrace();
+        }
+    }
 }
