@@ -14,6 +14,9 @@ public class HtmlValidator {
 
     public HtmlValidator(Queue<HtmlTag> tags) {
         queue = new LinkedList<HtmlTag>();
+        for (HtmlTag tag : tags) {
+            queue.add(tag);
+        }
     }
 
     public void addTag(HtmlTag tag) {
