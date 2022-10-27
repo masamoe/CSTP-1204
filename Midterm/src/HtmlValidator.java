@@ -39,18 +39,17 @@ public class HtmlValidator {
                 stack.push(tag);
             } else {
                 if (stack.isEmpty()) {
-                    System.out.println("Error: " + tag.getElement() + " tag is not opened");
+                    System.out.println("Extra closing tag: " + tag);
                 } else {
                     HtmlTag top = stack.pop();
                     if (!top.getElement().equals(tag.getElement())) {
-                        System.out.println("Error: " + tag.getElement() + " tag is not opened");
+                        System.out.println("Mismatched tags: " + top + " and " + tag);
                     }
                 }
             }
         }
         while (!stack.isEmpty()) {
-            HtmlTag top = stack.pop();
-            System.out.println("Error: " + top.getElement() + " tag is not closed");
+            System.out.println("Missing closing tag: " + stack.pop());
         }
     }
 }
