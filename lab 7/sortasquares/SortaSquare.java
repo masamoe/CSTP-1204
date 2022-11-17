@@ -25,21 +25,19 @@ public class SortaSquare {
     private static boolean isSortaSquare(int i) {
         int n = -1;
         int sqrt = (int) Math.sqrt(i);
-        while (sqrt > 0) {
-            int a = 1;
-            while (a < sqrt) {
-                if (a * a + sqrt * sqrt == i) {
-                    n = sqrt;
-                    break;
-                }
-                a++;
-            }
-            if (n != -1) {
-                break;
-            }
-            sqrt--;
+        if (sqrt * sqrt == i) {
+            n = sqrt;
+        } else if ((sqrt + 1) * (sqrt + 1) == i) {
+            n = sqrt + 1;
         }
-        return n != -1;
-    }
-
+        if (n == -1) {
+            return false;
+        }
+        int sum = 0;
+        while (n > 0) {
+            sum += n % 10;
+            n /= 10;
+        }
+        return sum * sum == i;
+    }    
 }
