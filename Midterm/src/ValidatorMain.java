@@ -21,64 +21,65 @@ public class ValidatorMain {
     public static void main(String[] args) throws IOException {
         HtmlValidator validator = new HtmlValidator();
         String pageText = "";
-        Scanner console = new Scanner(System.in);
-        String choice = "s";
+        try (Scanner console = new Scanner(System.in)) {
+            String choice = "s";
 
-        while (true) {
-            if (choice.startsWith("s")) {
-                // prompt for page, then download it if it's a URL
-                System.out.print("Page URL or file name (blank for empty): ");
-                String url = console.nextLine().trim();
-                if (url.length() > 0) {
-                    if (isURL(url)) {
-                        System.out.println("Downloading from " + url + " ...");
+            while (true) {
+                if (choice.startsWith("s")) {
+                    // prompt for page, then download it if it's a URL
+                    System.out.print("Page URL or file name (blank for empty): ");
+                    String url = console.nextLine().trim();
+                    if (url.length() > 0) {
+                        if (isURL(url)) {
+                            System.out.println("Downloading from " + url + " ...");
+                        }
+
+                        try {
+                            pageText = readCompleteFileOrURL(url);
+                            Queue<HtmlTag> tags = HtmlTag.tokenize(pageText);
+
+                            // create the HTML validator
+                            validator = new HtmlValidator(tags);
+                        } catch (MalformedURLException mfurle) {
+                            System.out.println("Badly formatted URL: " + url);
+                        } catch (FileNotFoundException fnfe) {
+                            System.out.println("Web page or file not found: " + url);
+                        } catch (IOException ioe) {
+                            System.out.println("I/O error: " + ioe.getMessage());
+                        }
+                    } else {
+                        pageText = "No page text (starting from empty queue)";
+                        validator = new HtmlValidator();
                     }
-
-                    try {
-                        pageText = readCompleteFileOrURL(url);
-                        Queue<HtmlTag> tags = HtmlTag.tokenize(pageText);
-
-                        // create the HTML validator
-                        validator = new HtmlValidator(tags);
-                    } catch (MalformedURLException mfurle) {
-                        System.out.println("Badly formatted URL: " + url);
-                    } catch (FileNotFoundException fnfe) {
-                        System.out.println("Web page or file not found: " + url);
-                    } catch (IOException ioe) {
-                        System.out.println("I/O error: " + ioe.getMessage());
+                } else if (choice.startsWith("a")) {
+                    System.out.print("What tag (such as <table> or </p>)? ");
+                    String tagText = console.nextLine().trim();
+                    boolean isOpenTag = !tagText.contains("</");
+                    String element = tagText.replaceAll("[^a-zA-Z!-]+", "");
+                    if (element.contains("!--")) {
+                        element = "!--"; // HTML comments
                     }
-                } else {
-                    pageText = "No page text (starting from empty queue)";
-                    validator = new HtmlValidator();
+                    HtmlTag tag = new HtmlTag(element, isOpenTag);
+                    validator.addTag(tag);
+                } else if (choice.startsWith("g")) {
+                    System.out.println(validator.getTags());
+                } else if (choice.startsWith("p")) {
+                    System.out.println(pageText);
+                } else if (choice.startsWith("r")) {
+                    System.out.print("Remove what element? ");
+                    String element = console.nextLine().trim();
+                    validator.removeAll(element);
+                } else if (choice.startsWith("v")) {
+                    validator.validate();
+                    System.out.println();
+                } else if (choice.startsWith("q")) {
+                    break;
                 }
-            } else if (choice.startsWith("a")) {
-                System.out.print("What tag (such as <table> or </p>)? ");
-                String tagText = console.nextLine().trim();
-                boolean isOpenTag = !tagText.contains("</");
-                String element = tagText.replaceAll("[^a-zA-Z!-]+", "");
-                if (element.contains("!--")) {
-                    element = "!--"; // HTML comments
-                }
-                HtmlTag tag = new HtmlTag(element, isOpenTag);
-                validator.addTag(tag);
-            } else if (choice.startsWith("g")) {
-                System.out.println(validator.getTags());
-            } else if (choice.startsWith("p")) {
-                System.out.println(pageText);
-            } else if (choice.startsWith("r")) {
-                System.out.print("Remove what element? ");
-                String element = console.nextLine().trim();
-                validator.removeAll(element);
-            } else if (choice.startsWith("v")) {
-                validator.validate();
+
                 System.out.println();
-            } else if (choice.startsWith("q")) {
-                break;
+                System.out.print("(a)ddTag, (g)etTags, (r)emoveAll, (v)alidate, (s)et URL, (p)rint, (q)uit? ");
+                choice = console.nextLine().trim().toLowerCase();
             }
-
-            System.out.println();
-            System.out.print("(a)ddTag, (g)etTags, (r)emoveAll, (v)alidate, (s)et URL, (p)rint, (q)uit? ");
-            choice = console.nextLine().trim().toLowerCase();
         }
     }
 
