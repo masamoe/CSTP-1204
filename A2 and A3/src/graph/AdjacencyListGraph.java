@@ -35,6 +35,9 @@ public class AdjacencyListGraph implements Graph {
 
   public List<Vertex> getUpstreamNeighbors(Vertex v) {
     List<Vertex> upstream = new ArrayList<Vertex>();
+    if (!adjVertices.containsKey(v)) {
+      return upstream;
+    }
     for (Vertex v1 : adjVertices.keySet()) {
       if (adjVertices.get(v1).contains(v)) {
         upstream.add(v1);
