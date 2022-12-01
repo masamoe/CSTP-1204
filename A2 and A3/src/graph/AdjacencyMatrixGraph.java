@@ -3,7 +3,6 @@ import staff.Vertex;
 import java.util.*;
 
 public class AdjacencyMatrixGraph implements Graph {
-  // TODO: Implement this class
   public void addVertex(Vertex v) {
     if (adjMatrix.containsKey(v)) {
       return;
