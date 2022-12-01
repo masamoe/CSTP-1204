@@ -36,7 +36,7 @@ public class SocialNetworkAnalysisTest {
         SocialNetworkAnalysisTest.aGraph = aGraph.getClass().newInstance();
 
         // The name of the file to open.
-        String fileName = "datasets/twitter.txt";
+        String fileName = "C:/Users/Jake/Documents/GitHub/Software-Analysis/A2 and A3/src/datasets/twitter.txt";
 
         // This will reference one line at a time
         String line = null;
