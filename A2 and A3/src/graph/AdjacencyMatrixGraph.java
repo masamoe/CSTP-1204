@@ -5,6 +5,7 @@ import staff.Vertex;
 import java.util.*;
 
 public class AdjacencyMatrixGraph implements Graph {
+
   public void addVertex(Vertex v) {
     if (adjMatrix.containsKey(v)) {
       return;
@@ -12,8 +13,8 @@ public class AdjacencyMatrixGraph implements Graph {
     adjMatrix.put(v, new HashMap<Vertex, Boolean>());
     for (Vertex v1 : adjMatrix.keySet()) {
       adjMatrix.get(v1).put(v, false);
+      adjMatrix.get(v).put(v1, false);
     }
-    adjMatrix.get(v).put(v, true);
   }
 
   public void addEdge(Vertex v1, Vertex v2) {
@@ -26,8 +27,10 @@ public class AdjacencyMatrixGraph implements Graph {
   public boolean edgeExists(Vertex v1, Vertex v2) {
     if (!adjMatrix.containsKey(v1) || !adjMatrix.containsKey(v2)) {
       return false;
+    } else if (adjMatrix.get(v1).get(v2)) {
+      return true;
     }
-    return adjMatrix.get(v1).get(v2);
+    return false;
   }
 
   public List<Vertex> getDownstreamNeighbors(Vertex v) {
@@ -60,7 +63,7 @@ public class AdjacencyMatrixGraph implements Graph {
     return new ArrayList<Vertex>(adjMatrix.keySet());
   }
 
-  public Map<Vertex, Map<Vertex, Boolean>> adjMatrix;
+  private Map<Vertex, Map<Vertex, Boolean>> adjMatrix = new HashMap<Vertex, Map<Vertex, Boolean>>();
 
   public AdjacencyMatrixGraph() {
     adjMatrix = new HashMap<Vertex, Map<Vertex, Boolean>>();
