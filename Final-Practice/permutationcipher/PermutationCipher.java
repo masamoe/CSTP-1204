@@ -28,14 +28,16 @@ public class PermutationCipher {
      */
     public static String encrypt(String plaintext, int[] permutationArray, int rounds) throws Exception {
         if (permutationArray.length != plaintext.length()) {
-            throw new Exception("Permutation array length must be equal to the length of the plain text.");
+            throw new Exception("The permutation array must be equal in length to the plain text.");
         }
-        if (!isPermutation(permutationArray)) {
-            throw new Exception(
-                    "Permutation array must be a permutation of integers in [0 .. permutationArray.length-1].");
+        for (int i = 0; i < permutationArray.length; i++) {
+            if (permutationArray[i] < 0 || permutationArray[i] >= permutationArray.length) {
+                throw new Exception(
+                        "The permutation array must be a permutation of integers in [0 .. permutationArray.length-1].");
+            }
         }
         if (rounds < 1) {
-            throw new Exception("Number of rounds must be at least 1.");
+            throw new Exception("The number of rounds of encryption needed must be at least 1.");
         }
         String ciphertext = plaintext;
         for (int i = 0; i < rounds; i++) {
@@ -52,19 +54,4 @@ public class PermutationCipher {
         return new String(chars);
     }
 
-    private static boolean isPermutation(int[] permutationArray) {
-        int[] count = new int[permutationArray.length];
-        for (int i = 0; i < permutationArray.length; i++) {
-            if (permutationArray[i] < 0 || permutationArray[i] >= permutationArray.length) {
-                return false;
-            }
-            count[permutationArray[i]]++;
-        }
-        for (int i = 0; i < count.length; i++) {
-            if (count[i] != 1) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

@@ -19,8 +19,32 @@ public class NumberLineTravel {
      *         x[0] is not included in the count.
      */
     public static int howManyCitiesCanIVisit(int[] x, int k) {
-        // TODO: Implement this method
-        return -1;
+        int count = 0;
+        int currentCity = x[0];
+        int[] visitedCities = new int[x.length];
+        for (int i = 1; i < x.length; i++) {
+            if (!isVisited(x[i], visitedCities)) {
+                if (currentCity - x[i] <= k && currentCity - x[i] > 0) {
+                    count++;
+                    currentCity = x[i];
+                } else if (x[i] - currentCity <= k && x[i] - currentCity > 0) {
+                    count++;
+                    currentCity = x[i];
+                }
+                currentCity = x[i];
+                visitedCities[i] = currentCity;
+            }
+        }
+        return count;
+    }
+
+    private static boolean isVisited(int i, int[] visitedCities) {
+        for (int j = 0; j < visitedCities.length; j++) {
+            if (i == visitedCities[j]) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
