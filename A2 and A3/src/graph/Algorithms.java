@@ -24,12 +24,13 @@ public class Algorithms {
    * @param b
    * @return
    */
-  public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
+  public static int shortestDistance(Graph graph, Vertex a, Vertex b) throws IllegalArgumentException {
     if (!graph.getVertices().contains(a) || !graph.getVertices().contains(b)) {
       return -1;
     }
     if (a.equals(b)) {
-      return 0;
+      IllegalArgumentException e = new IllegalArgumentException();
+      throw e;
     }
     Queue<Vertex> queue = new LinkedList<Vertex>();
     Map<Vertex, Integer> distance = new HashMap<Vertex, Integer>();
@@ -65,6 +66,9 @@ public class Algorithms {
 
   public static List<Vertex> commonDownStream(Graph graph, Vertex a, Vertex b) {
     List<Vertex> common = new ArrayList<Vertex>();
+    if (!graph.getVertices().contains(a) || !graph.getVertices().contains(b)) {
+      return common;
+    }
     for (Vertex v : graph.getDownstreamNeighbors(a)) {
       if (graph.getDownstreamNeighbors(b).contains(v)) {
         common.add(v);

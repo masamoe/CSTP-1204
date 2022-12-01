@@ -100,7 +100,7 @@ public class SocialNetworkAnalysisTest {
         Vertex follower = new Vertex("38571755");
         Vertex followed = new Vertex("84200495");
 
-        List<Vertex> intersectionList = Algorithms.commonDownStream(aGraph, followed, follower);
+        List<Vertex> intersectionList = Algorithms.commonInfluencers(aGraph, followed, follower);
         System.out.println(intersectionList.size());
 
         // Test the size if the commonDownStream
@@ -111,7 +111,5 @@ public class SocialNetworkAnalysisTest {
     public static Collection<Object[]> instancesToTest() {
 
         return Arrays.asList(new Object[] { new AdjacencyListGraph() }, new Object[] { new AdjacencyMatrixGraph() });
-
     }
-
 }

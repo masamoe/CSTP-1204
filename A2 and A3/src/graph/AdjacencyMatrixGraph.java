@@ -60,7 +60,11 @@ public class AdjacencyMatrixGraph implements Graph {
   }
 
   public List<Vertex> getVertices() {
-    return new ArrayList<Vertex>(adjMatrix.keySet());
+    List<Vertex> vertices = new ArrayList<Vertex>();
+    for (Vertex v : adjMatrix.keySet()) {
+      vertices.add(v);
+    }
+    return vertices;
   }
 
   private Map<Vertex, Map<Vertex, Boolean>> adjMatrix = new HashMap<Vertex, Map<Vertex, Boolean>>();
