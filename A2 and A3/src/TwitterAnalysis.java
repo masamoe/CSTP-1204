@@ -1,8 +1,10 @@
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Set;
 
 import staff.Graph;
 import staff.Vertex;
@@ -42,7 +44,7 @@ public class TwitterAnalysis {
 
         try (Scanner scans = new Scanner(fileInUse)) {
             while (scans.hasNextLine()){
-  
+           
 
             String numsScan = scans.nextLine();
 
@@ -69,7 +71,6 @@ public class TwitterAnalysis {
 
         List<Vertex> common = new ArrayList<Vertex>();
 
-
         common = Algorithms.commonDownstreamVertices(graph, v1, v2);
 
         for (int i = 0; i < common.size(); i++){
@@ -79,13 +80,24 @@ public class TwitterAnalysis {
     }
 
     public static void readInput (String commandsFile, Graph graph) throws IOException{
+
+        Set<String> duplicates = new LinkedHashSet<>();
+
         
         try (BufferedReader read = new BufferedReader(new FileReader(commandsFile))) {
+
             String line;
 
             while ((line = read.readLine()) != null){
 
-                String liness [] = line.split(" ");
+                if(line.contains("?")){
+                    duplicates.add(line);
+                }
+            }
+
+            for (String newDuplicate : duplicates){
+
+                String liness [] = newDuplicate.split(" ");
 
                 Vertex user1 = new Vertex(liness[1]);
                 Vertex user2 = new Vertex(liness[2]);
@@ -110,7 +122,6 @@ public class TwitterAnalysis {
 
     }
 
-
     public static void results(String resultsFile) throws IOException {
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(resultsFile));
@@ -121,4 +132,7 @@ public class TwitterAnalysis {
     }
 
 }
+
+
+
 
