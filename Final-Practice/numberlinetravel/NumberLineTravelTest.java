@@ -1,3 +1,4 @@
+package numberlinetravel;
 
 import static org.junit.Assert.*;
 

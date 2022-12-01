@@ -1,3 +1,4 @@
+package numberlinetravel;
 
 public class NumberLineTravel {
 
