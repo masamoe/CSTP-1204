@@ -28,12 +28,12 @@ public class SocialNetworkAnalysisTest {
     static Graph aGraph;
 
     public SocialNetworkAnalysisTest(Graph anInterface) {
-        this.aGraph = anInterface;
+        SocialNetworkAnalysisTest.aGraph = anInterface;
     }
 
     @Before
     public void readTwitterfile() throws InstantiationException, IllegalAccessException {
-        this.aGraph = aGraph.getClass().newInstance();
+        SocialNetworkAnalysisTest.aGraph = aGraph.getClass().newInstance();
 
         // The name of the file to open.
         String fileName = "datasets/twitter.txt";
