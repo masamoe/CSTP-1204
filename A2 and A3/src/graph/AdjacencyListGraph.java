@@ -1,3 +1,5 @@
+package graph;
+
 import staff.Graph;
 import staff.Vertex;
 import java.util.*;

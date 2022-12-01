@@ -19,7 +19,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import Exceptions.NoPathException;
+import graph.*;
+import staff.Graph;
+import staff.Vertex;
 
 @RunWith(Parameterized.class)
 public class SocialNetworkAnalysisTest {

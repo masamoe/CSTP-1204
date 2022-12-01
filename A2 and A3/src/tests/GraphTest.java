@@ -11,6 +11,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import staff.Graph;
+import staff.Vertex;
+import graph.*;
+
 @RunWith(Parameterized.class)
 public class GraphTest {
     // Graph aGraph = new AdjacencyMatrixGraph();

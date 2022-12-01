@@ -1,3 +1,5 @@
+package graph;
+
 import staff.Graph;
 import staff.Vertex;
 import java.util.*;
@@ -48,8 +50,11 @@ public class Algorithms {
     return distance.get(b);
   }
 
-  public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
+  public static List<Vertex> commonUpStream(Graph graph, Vertex a, Vertex b) {
     List<Vertex> common = new ArrayList<Vertex>();
+    if (!graph.getVertices().contains(a) || !graph.getVertices().contains(b)) {
+      return common;
+    }
     for (Vertex v : graph.getUpstreamNeighbors(a)) {
       if (graph.getUpstreamNeighbors(b).contains(v)) {
         common.add(v);
@@ -58,7 +63,7 @@ public class Algorithms {
     return common;
   }
 
-  public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex a, Vertex b) {
+  public static List<Vertex> commonDownStream(Graph graph, Vertex a, Vertex b) {
     List<Vertex> common = new ArrayList<Vertex>();
     for (Vertex v : graph.getDownstreamNeighbors(a)) {
       if (graph.getDownstreamNeighbors(b).contains(v)) {
@@ -88,48 +93,74 @@ public class Algorithms {
     return retweets;
   }
 
-  public Set<List<Vertex>> breadthFirstSearch(Graph graph, Vertex start) {
+  public static Set<List<Vertex>> breadthFirstSearch(Graph aGraph) {
     Set<List<Vertex>> paths = new HashSet<List<Vertex>>();
-    Queue<List<Vertex>> queue = new LinkedList<List<Vertex>>();
-    List<Vertex> path = new ArrayList<Vertex>();
-    path.add(start);
-    queue.add(path);
-    while (!queue.isEmpty()) {
-      path = queue.remove();
-      Vertex last = path.get(path.size() - 1);
-      if (last.equals(start)) {
-        paths.add(path);
-      }
-      for (Vertex v : graph.getDownstreamNeighbors(last)) {
-        if (!path.contains(v)) {
-          List<Vertex> newPath = new ArrayList<Vertex>(path);
-          newPath.add(v);
-          queue.add(newPath);
+    Queue<Vertex> queue = new LinkedList<Vertex>();
+    Map<Vertex, Vertex> parent = new HashMap<Vertex, Vertex>();
+    for (Vertex v : aGraph.getVertices()) {
+      parent.put(v, null);
+    }
+    for (Vertex v : aGraph.getVertices()) {
+      if (parent.get(v) == null) {
+        queue.add(v);
+        parent.put(v, v);
+        while (!queue.isEmpty()) {
+          Vertex u = queue.remove();
+          for (Vertex w : aGraph.getDownstreamNeighbors(u)) {
+            if (parent.get(w) == null) {
+              parent.put(w, u);
+              queue.add(w);
+            }
+          }
         }
       }
+    }
+    for (Vertex v : aGraph.getVertices()) {
+      List<Vertex> path = new ArrayList<Vertex>();
+      Vertex u = v;
+      while (u != parent.get(u)) {
+        path.add(u);
+        u = parent.get(u);
+      }
+      path.add(u);
+      Collections.reverse(path);
+      paths.add(path);
     }
     return paths;
   }
 
-  public Set<List<Vertex>> depthFirstSearch(Graph graph, Vertex start) {
+  public static Set<List<Vertex>> depthFirstSearch(Graph graph) {
     Set<List<Vertex>> paths = new HashSet<List<Vertex>>();
-    Stack<List<Vertex>> stack = new Stack<List<Vertex>>();
-    List<Vertex> path = new ArrayList<Vertex>();
-    path.add(start);
-    stack.push(path);
-    while (!stack.isEmpty()) {
-      path = stack.pop();
-      Vertex last = path.get(path.size() - 1);
-      if (last.equals(start)) {
-        paths.add(path);
-      }
-      for (Vertex v : graph.getDownstreamNeighbors(last)) {
-        if (!path.contains(v)) {
-          List<Vertex> newPath = new ArrayList<Vertex>(path);
-          newPath.add(v);
-          stack.push(newPath);
+    Queue<Vertex> queue = new LinkedList<Vertex>();
+    Map<Vertex, Vertex> parent = new HashMap<Vertex, Vertex>();
+    for (Vertex v : graph.getVertices()) {
+      parent.put(v, null);
+    }
+    for (Vertex v : graph.getVertices()) {
+      if (parent.get(v) == null) {
+        queue.add(v);
+        parent.put(v, v);
+        while (!queue.isEmpty()) {
+          Vertex u = queue.remove();
+          for (Vertex w : graph.getDownstreamNeighbors(u)) {
+            if (parent.get(w) == null) {
+              parent.put(w, u);
+              queue.add(w);
+            }
+          }
         }
       }
+    }
+    for (Vertex v : graph.getVertices()) {
+      List<Vertex> path = new ArrayList<Vertex>();
+      Vertex u = v;
+      while (u != parent.get(u)) {
+        path.add(u);
+        u = parent.get(u);
+      }
+      path.add(u);
+      Collections.reverse(path);
+      paths.add(path);
     }
     return paths;
   }

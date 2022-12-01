@@ -2,15 +2,7 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import ca.ubc.ece.cpen221.mp3.graph.*;
-import ca.ubc.ece.cpen221.mp3.staff.*;
+import java.util.*;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -18,7 +10,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import Exceptions.NoPathException;
+import staff.Graph;
+import staff.Vertex;
+import graph.*;
 
 @RunWith(Parameterized.class)
 public class AlgorithmsTest {
@@ -103,7 +97,7 @@ public class AlgorithmsTest {
 
     @Test
     public void testDFS() {
-        Set<List<Vertex>> setOfTraversalListsDFS = Algorithms.DFS(aGraph);
+        Set<List<Vertex>> setOfTraversalListsDFS = Algorithms.depthFirstSearch(aGraph);
 
         // check the size of the set
         assertEquals(GRAPH_SIZE, setOfTraversalListsDFS.size());
@@ -129,7 +123,7 @@ public class AlgorithmsTest {
 
     @Test
     public void testBFS() {
-        Set<List<Vertex>> setOfTraversalListsDFS = Algorithms.BFS(aGraph);
+        Set<List<Vertex>> setOfTraversalListsDFS = Algorithms.breadthFirstSearch(aGraph);
 
         // Check the size of the set
         assertEquals(GRAPH_SIZE, setOfTraversalListsDFS.size());
