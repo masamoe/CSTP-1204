@@ -1,5 +1,8 @@
 package numberlinetravel;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class NumberLineTravel {
 
     /**
@@ -19,32 +22,55 @@ public class NumberLineTravel {
      *         x[0] is not included in the count.
      */
     public static int howManyCitiesCanIVisit(int[] x, int k) {
-        int count = 0;
+        // int count = 0;
+        // int currentCity = x[0];
+        // int[] visitedCities = new int[x.length];
+        // for (int i = 1; i < x.length; i++) {
+        // if (!isVisited(x[i], visitedCities)) {
+        // if (currentCity - x[i] <= k && currentCity - x[i] > 0) {
+        // count++;
+        // currentCity = x[i];
+        // } else if (x[i] - currentCity <= k && x[i] - currentCity > 0) {
+        // count++;
+        // currentCity = x[i];
+        // }
+        // currentCity = x[i];
+        // visitedCities[i] = currentCity;
+        // }
+        // }
+        // return count;
+
+        Set<Integer> vistedSet = new HashSet<Integer>();
+        vistedSet.add(x[0]);
         int currentCity = x[0];
-        int[] visitedCities = new int[x.length];
         for (int i = 1; i < x.length; i++) {
-            if (!isVisited(x[i], visitedCities)) {
-                if (currentCity - x[i] <= k && currentCity - x[i] > 0) {
-                    count++;
-                    currentCity = x[i];
-                } else if (x[i] - currentCity <= k && x[i] - currentCity > 0) {
-                    count++;
-                    currentCity = x[i];
-                }
+            if (valid(x[i], k, vistedSet) && !vistedSet.contains(x[i])) {
                 currentCity = x[i];
-                visitedCities[i] = currentCity;
+                vistedSet.add(x[i]);
+                i = 0;
             }
         }
-        return count;
+        return vistedSet.size() - 1;
     }
 
-    private static boolean isVisited(int i, int[] visitedCities) {
-        for (int j = 0; j < visitedCities.length; j++) {
-            if (i == visitedCities[j]) {
-                return true;
+    private static boolean valid(int i, int k, Set<Integer> vistedSet) {
+        boolean result = false;
+        for (int yCity : vistedSet) {
+            if (Math.abs(i - yCity) <= k) {
+                result = true;
             }
         }
-        return false;
+
+        return result;
     }
+
+    // private static boolean isVisited(int i, int[] visitedCities) {
+    // for (int j = 0; j < visitedCities.length; j++) {
+    // if (i == visitedCities[j]) {
+    // return true;
+    // }
+    // }
+    // return false;
+    // }
 
 }
