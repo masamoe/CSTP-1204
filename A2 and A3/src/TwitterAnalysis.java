@@ -71,7 +71,7 @@ public class TwitterAnalysis {
 
         List<Vertex> common = new ArrayList<Vertex>();
 
-        common = Algorithms.commonDownstreamVertices(graph, v1, v2);
+        common = Algorithms.commonDownStream(graph, v1, v2);
 
         for (int i = 0; i < common.size(); i++){
             writing += common.get(i).toString() + "\n";
