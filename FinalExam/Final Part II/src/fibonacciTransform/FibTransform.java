@@ -21,8 +21,32 @@ public class FibTransform {
 	 * @return true if the transformation is possible and false otherwise
 	 */
 	public static boolean isPossible_onlyOneDoubling(int n, int m) {
-		// TODO: Implement this method
-		return false; // change this
+		if (isFibonacci(n)){
+			return true;
+		}
+		else if (m == 0){
+			return false;
+		}
+		else if (m == 1){
+			if (isFibonacci(n*2)){
+				return true;
+			}
+			else if (isFibonacci(n+1)){
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else if (isFibonacci((n*2)+(m-1))){
+			return true;
+		}
+		else if (isFibonacci(n+m)){
+			return true;
+		}
+		else{
+			return isPossible_onlyOneDoubling(n,(m-1));
+		}
 	}
 
 	/**
@@ -40,8 +64,30 @@ public class FibTransform {
 	 * @return true if the transformation is possible and false otherwise
 	 */
 	public static boolean isPossible(int n, int m) {
-		// TODO: Implement this method
-		return false; // change this
+		if (isFibonacci(n)){
+			return true;
+		}
+		else if (m == 0){
+			return false;
+		}
+		else if (isFibonacci(n*2)){
+			return true;
+		}
+		else if (isFibonacci(n+1)){
+			return true;
+		}
+		else{
+			return isPossible(n*2,(m-1)) || isPossible(n+1,(m-1));
+		}
+	}
+
+	static boolean isPerfectSquare(int x){
+		int s = (int) Math.sqrt(x);
+		return (s*s == x);
+	}
+
+	static boolean isFibonacci(int n){
+		return isPerfectSquare(5*n*n + 4) || isPerfectSquare(5*n*n - 4);
 	}
 
 }
