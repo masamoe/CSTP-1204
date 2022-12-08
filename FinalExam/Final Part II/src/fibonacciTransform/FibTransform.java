@@ -45,7 +45,7 @@ public class FibTransform {
 			return true;
 		}
 		else{
-			return isPossible_onlyOneDoubling(n,(m-1));
+			return isPossible_onlyOneDoubling(n+1,(m-1));
 		}
 	}
 
