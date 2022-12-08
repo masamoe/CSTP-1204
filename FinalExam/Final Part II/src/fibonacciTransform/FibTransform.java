@@ -81,13 +81,17 @@ public class FibTransform {
 		}
 	}
 
-	static boolean isPerfectSquare(int x){
-		int s = (int) Math.sqrt(x);
-		return (s*s == x);
-	}
-
-	static boolean isFibonacci(int n){
-		return isPerfectSquare(5*n*n + 4) || isPerfectSquare(5*n*n - 4);
-	}
-
+	public static boolean isFibonacci(int n) {
+        if(n==0){
+            return true;
+        }
+        int fib1 = 0;
+        int fib2 = 1;
+        while (fib2 < n){
+            int saveFib1 = fib1;
+            fib1 = fib2;
+            fib2 = saveFib1 + fib2;
+        }
+        return fib2 == n;
+    }
 }
